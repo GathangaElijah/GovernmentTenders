@@ -1,40 +1,20 @@
 package main
 
 import (
-    "fmt"
-
-    "github.com/xuri/excelize/v2"
+	"log"
+	"net/http"
+	"tenders/handlers"
 )
 
 func main() {
-    f, err := excelize.OpenFile("data/published_contracts.xlsx")
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    defer func() {
-        // Close the spreadsheet.
-        if err := f.Close(); err != nil {
-            fmt.Println(err)
-        }
-    }()
-    // Get value from cell by given worksheet name and cell reference.
-    cell, err := f.GetCellValue("Sheet1", "B2")
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    fmt.Println(cell)
-    // Get all the rows in the Sheet1.
-    rows, err := f.GetRows("Sheet1")
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-    for _, row := range rows {
-        for _, colCell := range row {
-            fmt.Print(colCell, "\t")
-        }
-        fmt.Println()
-    }
+	http.HandleFunc("/", handlers.Index)
+
+    fileHandler := http.FileServer(http.Dir("./static"))
+    http.Handle("/static/", http.StripPrefix("templates",fileHandler))
+	err := http.ListenAndServe(":8080", nil)
+    // log.Println("Server started at : http:local")
+	if err != nil {
+		log.Println("problem creating the server\n", err)
+		return
+	}
 }
