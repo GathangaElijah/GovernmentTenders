@@ -27,10 +27,10 @@ func FileReader() ([][]string, error) {
 	return ContractsData, nil
 }
 
-func ContractsMapper(s [][]string) map[int]models.Contract {
-	var contractsMap = make(map[int]models.Contract)
+func ContractsMapper(s [][]string) models.Contracts {
+	var ContractsData models.Contracts
 	var contractStruct models.Contract
-	for i, val := range s {
+	for _, val := range s {
 		contractStruct.ContractNumber = val[0]
 		contractStruct.Amount = val[1]
 		contractStruct.AwardDate = val[2]
@@ -52,8 +52,7 @@ func ContractsMapper(s [][]string) map[int]models.Contract {
 		contractStruct.NoOfBOI = val[18]
 		contractStruct.CreatedAt = val[19]
 
-		contractsMap[i] = contractStruct
+		ContractsData = append(ContractsData, contractStruct)
 	}
-
-	return contractsMap
+	return ContractsData
 }
