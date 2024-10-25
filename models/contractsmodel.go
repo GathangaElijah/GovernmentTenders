@@ -22,3 +22,5 @@ type Contract struct{
 	NoOfBOI string
 	CreatedAt string
 }
+
+type Contracts []Contract
