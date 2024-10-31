@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"net/http"
-	"tenders/utilities"
+	// "tenders/utilities"
 	"text/template"
 )
 
@@ -15,15 +15,15 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 	//Fetch data from the files
-	data,  err := utilities.FileReader()
+	// data,  err := utilities.FileReader()
 	if err != nil {
 		http.Error(writer, "Internal Server error", http.StatusInternalServerError)
 		return
 	}
-	contractData := utilities.ContractsMapper(data)
+	// contractData := utilities.ContractsMapper(data)
 	
 	indexTemplate := templ.Lookup("index.html")
-	err = indexTemplate.Execute(writer, contractData)
+	err = indexTemplate.Execute(writer, nil)
 	if err != nil {
 		http.Error(writer, "Error Executing index template data", http.StatusInternalServerError)
 		return
