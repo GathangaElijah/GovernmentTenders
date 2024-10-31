@@ -14,13 +14,6 @@ func Index(writer http.ResponseWriter, request *http.Request) {
 		http.Error(writer, "Error loading index template", http.StatusInternalServerError)
 		return
 	}
-	//Fetch data from the files
-	// data,  err := utilities.FileReader()
-	if err != nil {
-		http.Error(writer, "Internal Server error", http.StatusInternalServerError)
-		return
-	}
-	// contractData := utilities.ContractsMapper(data)
 	
 	indexTemplate := templ.Lookup("index.html")
 	err = indexTemplate.Execute(writer, nil)
